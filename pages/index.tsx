@@ -5,12 +5,7 @@ import Sidebar from "../components/Sidebar";
 
 const Home: NextPage = () => {
   return (
-    <div className="">
-     <Head>
-      <title>Spotify 2.0</title>
-     </Head>
-
-     <h1>This a DOPE spotify 2.0 build</h1>
+    <div className="bg-black h-screen overflow-hidden">
      <main>
       <Sidebar/>
      </main>
