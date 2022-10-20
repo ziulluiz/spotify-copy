@@ -1,6 +1,7 @@
 import React from 'react'
+import { getProviders, signIn } from "next-auth/react";
 
-function login() {
+function Login() {
   return (
     <div>
       <h1>Login Page</h1>
@@ -8,4 +9,14 @@ function login() {
   )
 }
 
-export default login
+export default Login
+
+export async function getServeSideProps(){
+  const providers = await getProviders();
+
+  return {
+    props: {
+      providers
+    }
+  }
+}
