@@ -1,5 +1,5 @@
-import NextAuth from "next-auth"
-import SpotifyProvider from "next-auth/providers/spotify"
+import NextAuth from "next-auth";
+import SpotifyProvider from "next-auth/providers/spotify";
 import { LOGIN_URL } from "../../../lib/spotify";
 import { spotifyApi } from "../../../lib/spotify";
 
@@ -14,7 +14,7 @@ async function refreshAccessToken(token) {
     return{
       ...token,
       accessToken: refreshedToken.access_token,
-      accesTokenExpires: Date.now + refreshedToken.expires_in * 1000, //=1 hour as 3600 returns from spotify API
+      accessTokenExpires: Date.now + refreshedToken.expires_in * 1000, //=1 hour as 3600 returns from spotify API
       refreshToken: refreshedToken.refreshToken ?? token.refreshToken,
       //refresh if new one came back else fall back to old refresh token
     }
@@ -30,7 +30,7 @@ async function refreshAccessToken(token) {
 
 }
 
-export const authOptions = {
+export default NextAuth({
   // Configure one or more authentication providers
   providers: [
     SpotifyProvider({
@@ -52,11 +52,11 @@ export const authOptions = {
           accessToken: account.access_token,
           refreshToken: account.refreshToken,
           username: account.providerAccountId,
-          accesTokenExpires: account.expires_at * 1000, //handli expiry times in milliseconds hence *1000
+          accessTokenExpires: account.expires_at * 1000, //handli expiry times in milliseconds hence *1000
         }
       }
       //return previous token if the access token has not expired yet
-      if (Date.now() < token.accesTokenExpires){
+      if (Date.now() < token.accessTokenExpires){
         return token;
       }
 
@@ -71,6 +71,6 @@ export const authOptions = {
       return session;
     }
   }
-}
+})
 
-export default NextAuth(authOptions)
+// export default NextAuth(authOptions)
